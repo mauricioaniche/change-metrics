@@ -63,7 +63,7 @@ public class ChangeMetricsStudy implements Study {
 		for(ClassInfo info : repo.all()) {
 			csv.write(
 					info.getProject(),
-					info.getFile(),
+					info.getFile().replace(",", ""),
 					info.getRevisions(),
 					info.getRefactorings(),
 					info.getBugfixes(),
