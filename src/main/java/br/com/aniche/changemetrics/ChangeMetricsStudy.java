@@ -25,6 +25,12 @@ public class ChangeMetricsStudy implements Study {
 	}
 
 	public static void main(String[] args) {
+		
+		if(args == null || args.length < 2) {
+			System.out.println("Usage: java -jar <tool.jar> /dir/to/the/git/project /dir/to/the/file/output.csv");
+			System.exit(-1);
+		}
+		
 		ChangeMetricsStudy study = new ChangeMetricsStudy(args[0], args[1]);
 		new MetricMiner2().start(study);
 	}
