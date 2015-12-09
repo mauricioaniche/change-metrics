@@ -20,7 +20,7 @@ public class ClassInfoTest {
 	private Modification modification;
 	@Before
 	public void setUp() {
-		classInfo = new ClassInfo("p1.p2.SomeClass", "/project/p1/p2/SomeClass.java");
+		classInfo = new ClassInfo("/project/p1/p2/SomeClass.java");
 		dev = new Developer("Mauricio", "mauricioaniche@gmail.com");
 		
 		modification = new Modification("/project/p1/p2/SomeClass.java", "/project/p1/p2/SomeClass.java", ModificationType.MODIFY, "+ add\n+add\n- remove", "any source");

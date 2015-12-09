@@ -11,8 +11,7 @@ import br.com.metricminer2.domain.ModificationType;
 
 public class ClassInfo {
 
-	private String name;
-	private String path;
+	private String file;
 	private int revisions;
 	private int refactorings;
 	private int bugfixes;
@@ -28,9 +27,8 @@ public class ClassInfo {
 	private Calendar lastCommit;
 	
 
-	public ClassInfo(String name, String path) {
-		this.name = name;
-		this.path = path;
+	public ClassInfo(String file) {
+		this.file = file;
 		this.authors = new HashSet<>();
 	}
 
@@ -117,15 +115,9 @@ public class ClassInfo {
 
 
 
-	public String getName() {
-		return name;
+	public String getFile() {
+		return file;
 	}
-
-
-	public String getPath() {
-		return path;
-	}
-
 
 	public int getRevisions() {
 		return revisions;
@@ -209,6 +201,12 @@ public class ClassInfo {
 		long end = lastCommit.getTimeInMillis();
 	    long start = firstCommit.getTimeInMillis();
 	    return TimeUnit.MILLISECONDS.toDays(Math.abs(end - start)) / 7;
+	}
+
+
+
+	public void rename(String newPath) {
+		this.file = newPath;
 	}
 	
 }
