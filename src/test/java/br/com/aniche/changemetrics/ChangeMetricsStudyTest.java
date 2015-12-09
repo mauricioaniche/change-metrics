@@ -27,11 +27,10 @@ public class ChangeMetricsStudyTest {
 	
 	@Test
 	public void repo1() throws IOException {
-		ChangeMetricsStudy study = new ChangeMetricsStudy(path, outputFile);
+		ChangeMetricsStudy study = new ChangeMetricsStudy(path, outputFile, "single");
 		study.execute();
 		
 		String result = FileUtils.readFileToString(new File(outputFile));
-		System.out.println(result);
 		
 		String correctResult = 
 				"project,file,revisions,refactorings,bugfixes,authors,locAdded,locRemoved,maxLocAdded,maxLocRemoved,codeChurn,maxChangeset,avgChangeset,firstCommit,lastCommit,weeks\n"+

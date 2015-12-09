@@ -8,6 +8,7 @@ import br.com.metricminer2.RepositoryMining;
 import br.com.metricminer2.Study;
 import br.com.metricminer2.persistence.csv.CSVFile;
 import br.com.metricminer2.scm.GitRepository;
+import br.com.metricminer2.scm.SCMRepository;
 import br.com.metricminer2.scm.commitrange.Commits;
 
 public class ChangeMetricsStudy implements Study {
@@ -15,10 +16,12 @@ public class ChangeMetricsStudy implements Study {
 	private String projectPath;
 	private String outputPath;
 	private String projectName;
+	private String type;
 
-	public ChangeMetricsStudy(String projectPath, String outputPath) {
+	public ChangeMetricsStudy(String projectPath, String outputPath, String type) {
 		this.projectPath = projectPath;
 		this.outputPath = outputPath;
+		this.type = type;
 		
 		String[] names = projectPath.split("/");
 		projectName = names[names.length-1];
@@ -27,11 +30,11 @@ public class ChangeMetricsStudy implements Study {
 	public static void main(String[] args) {
 		
 		if(args == null || args.length < 2) {
-			System.out.println("Usage: java -jar <tool.jar> /dir/to/the/git/project /dir/to/the/file/output.csv");
+			System.out.println("Usage: java -jar <tool.jar> /dir/to/the/git/project /dir/to/the/file/output.csv all|single");
 			System.exit(-1);
 		}
 		
-		ChangeMetricsStudy study = new ChangeMetricsStudy(args[0], args[1]);
+		ChangeMetricsStudy study = new ChangeMetricsStudy(args[0], args[1], args[2]);
 		new MetricMiner2().start(study);
 	}
 	
@@ -41,8 +44,12 @@ public class ChangeMetricsStudy implements Study {
 		ClassInfoRepository repo = new ClassInfoRepository();
 		CSVFile csv = new CSVFile(outputPath);
 		
+		SCMRepository[] repositories = type.equals("all") ? 
+				GitRepository.allProjectsIn(projectPath) : 
+				new SCMRepository[] { GitRepository.singleProject(projectPath)};
+				
 		new RepositoryMining()
-			.in(GitRepository.singleProject(projectPath))
+			.in(repositories)
 			.through(Commits.all())
 			.startingFromTheBeginning()
 			.process(new ChangeMetricProcessor(repo))
