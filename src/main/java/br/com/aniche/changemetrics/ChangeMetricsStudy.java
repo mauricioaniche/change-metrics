@@ -48,11 +48,11 @@ public class ChangeMetricsStudy implements Study {
 			.process(new ChangeMetricProcessor(repo))
 			.mine();
 		
-		outpur(repo, csv);
+		output(repo, csv);
 		
 	}
 
-	private void outpur(ClassInfoRepository repo, CSVFile csv) {
+	private void output(ClassInfoRepository repo, CSVFile csv) {
 		
 		printHead(csv);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
