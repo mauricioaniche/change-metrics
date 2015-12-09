@@ -14,25 +14,27 @@ public class ClassInfoRepository {
 		this.db = new HashMap<>();
 	}
 	
-	public ClassInfo saveOrGet(Modification m) {
+	public ClassInfo saveOrGet(String project, Modification m) {
 		
 		String file = m.getNewPath();
-		if(!db.containsKey(file)) {
-			db.put(file, new ClassInfo(file));
+		String fullName = fullName(project, file);
+		
+		if(!db.containsKey(fullName)) {
+			db.put(fullName, new ClassInfo(project, file));
 		}
 		
-		return db.get(file);
+		return db.get(fullName);
 	}
 
-	public void rename(Modification m) {
+	public void rename(String project, Modification m) {
 		String oldPath = m.getOldPath();
 		String newPath = m.getNewPath();
 		
-		ClassInfo classInfo = db.remove(oldPath);
+		ClassInfo classInfo = db.remove(fullName(project, oldPath));
 		
 		if(classInfo!=null) {
 			classInfo.rename(newPath);
-			db.put(newPath, classInfo);
+			db.put(fullName(project, newPath), classInfo);
 		}
 	}
 
@@ -40,6 +42,9 @@ public class ClassInfoRepository {
 		return db.values();
 	}
 	
-	
+	private String fullName(String project, String file) {
+		return project + "/" + file;
+	}
+
 
 }

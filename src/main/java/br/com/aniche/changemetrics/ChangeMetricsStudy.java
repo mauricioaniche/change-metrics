@@ -15,16 +15,12 @@ public class ChangeMetricsStudy implements Study {
 
 	private String projectPath;
 	private String outputPath;
-	private String projectName;
 	private String type;
 
 	public ChangeMetricsStudy(String projectPath, String outputPath, String type) {
 		this.projectPath = projectPath;
 		this.outputPath = outputPath;
 		this.type = type;
-		
-		String[] names = projectPath.split("/");
-		projectName = names[names.length-1];
 	}
 
 	public static void main(String[] args) {
@@ -66,7 +62,7 @@ public class ChangeMetricsStudy implements Study {
 		
 		for(ClassInfo info : repo.all()) {
 			csv.write(
-					projectName,
+					info.getProject(),
 					info.getFile(),
 					info.getRevisions(),
 					info.getRefactorings(),

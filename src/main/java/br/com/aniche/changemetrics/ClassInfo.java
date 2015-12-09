@@ -25,9 +25,11 @@ public class ClassInfo {
 	private long totalChangeset;
 	private Calendar firstCommit;
 	private Calendar lastCommit;
+	private String project;
 	
 
-	public ClassInfo(String file) {
+	public ClassInfo(String project, String file) {
+		this.project = project;
 		this.file = file;
 		this.authors = new HashSet<>();
 	}
@@ -208,5 +210,8 @@ public class ClassInfo {
 	public void rename(String newPath) {
 		this.file = newPath;
 	}
-	
+
+	public String getProject() {
+		return project;
+	}
 }
