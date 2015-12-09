@@ -33,12 +33,13 @@ public class ChangeMetricsStudyTest {
 		String result = FileUtils.readFileToString(new File(outputFile));
 		
 		String correctResult = 
-				"project,file,revisions,refactorings,bugfixes,authors,locAdded,locRemoved,maxLocAdded,maxLocRemoved,codeChurn,maxChangeset,avgChangeset,firstCommit,lastCommit,weeks\n"+
-				"repo1,FileA.java,5,1,1,1,8,2,4,1,10,2,1.4,2015-12-09,2015-12-09,0\n"+
-				"repo1,FileB.java,2,1,0,1,6,1,5,1,7,2,2.0,2015-12-09,2015-12-09,0\n"+
-				"repo1,dir/FileD.java,1,0,0,1,4,0,4,0,4,1,1.0,2015-12-09,2015-12-09,0\n"+
-				"repo1,RenamedFileE.java,2,0,0,1,5,0,5,0,5,1,1.0,2015-12-09,2015-12-09,0\n"+
-				"repo1,FileC.java,2,0,0,1,5,1,4,1,6,1,1.0,2015-12-09,2015-12-09,0\n";
+				"project,file,revisions,refactorings,bugfixes,authors,locAdded,locRemoved,maxLocAdded,maxLocRemoved,avgLocAdded,avgLogRemoved,codeChurn,maxChangeset,avgChangeset,firstCommit,lastCommit,weeks\n"+
+				"repo1,FileA.java,5,1,1,1,8,2,4,1,1.6,0.4,10,2,1.4,2015-12-09,2015-12-09,0\n"+
+				"repo1,FileB.java,2,1,0,1,6,1,5,1,3.0,0.5,7,2,2.0,2015-12-09,2015-12-09,0\n"+
+				"repo1,dir/FileD.java,1,0,0,1,4,0,4,0,4.0,0.0,4,1,1.0,2015-12-09,2015-12-09,0\n"+
+				"repo1,RenamedFileE.java,2,0,0,1,5,0,5,0,2.5,0.0,5,1,1.0,2015-12-09,2015-12-09,0\n"+
+				"repo1,FileC.java,2,0,0,1,5,1,4,1,2.5,0.5,6,1,1.0,2015-12-09,2015-12-09,0\n";
+;
 		
 		Assert.assertEquals(correctResult, result);
 		
