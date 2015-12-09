@@ -14,10 +14,14 @@ public class ChangeMetricsStudy implements Study {
 
 	private String projectPath;
 	private String outputPath;
+	private String projectName;
 
 	public ChangeMetricsStudy(String projectPath, String outputPath) {
 		this.projectPath = projectPath;
 		this.outputPath = outputPath;
+		
+		String[] names = projectPath.split("/");
+		projectName = names[names.length-1];
 	}
 
 	public static void main(String[] args) {
@@ -34,6 +38,7 @@ public class ChangeMetricsStudy implements Study {
 		new RepositoryMining()
 			.in(GitRepository.singleProject(projectPath))
 			.through(Commits.all())
+			.startingFromTheBeginning()
 			.process(new ChangeMetricProcessor(repo))
 			.mine();
 		
@@ -48,6 +53,7 @@ public class ChangeMetricsStudy implements Study {
 		
 		for(ClassInfo info : repo.all()) {
 			csv.write(
+					projectName,
 					info.getFile(),
 					info.getRevisions(),
 					info.getRefactorings(),
@@ -70,6 +76,7 @@ public class ChangeMetricsStudy implements Study {
 
 	private void printHead(CSVFile csv) {
 		csv.write(
+				"project",
 				"file",
 				"revisions",
 				"refactorings",
