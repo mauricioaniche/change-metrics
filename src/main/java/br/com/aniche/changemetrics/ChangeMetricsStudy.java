@@ -29,7 +29,7 @@ public class ChangeMetricsStudy implements Study {
 
 	public static void main(String[] args) {
 		
-		if(args == null || args.length < 2) {
+		if(args == null || args.length < 3) {
 			System.out.println("Usage: java -jar <tool.jar> /dir/to/the/git/project /dir/to/the/file/output.csv all|single");
 			System.exit(-1);
 		}
