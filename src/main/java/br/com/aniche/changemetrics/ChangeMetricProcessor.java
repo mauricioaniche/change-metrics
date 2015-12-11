@@ -21,10 +21,10 @@ public class ChangeMetricProcessor implements CommitVisitor {
 		for(Modification modification : commit.getModifications()) {
 			if(!modification.fileNameEndsWith(".java")) continue;
 			if(modification.getType() == ModificationType.RENAME) {
-				classes.rename(repo.getLastDir(), modification);
+				classes.rename(repo, modification);
 			}
 
-			ClassInfo clazz = classes.saveOrGet(repo.getLastDir(), modification);
+			ClassInfo clazz = classes.saveOrGet(repo, modification);
 			clazz.update(commit, modification);
 		}
 	}

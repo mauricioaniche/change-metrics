@@ -6,6 +6,7 @@ import java.util.Map;
 
 import br.com.aniche.changemetrics.ClassInfo;
 import br.com.metricminer2.domain.Modification;
+import br.com.metricminer2.scm.SCMRepository;
 
 public class ClassInfoRepository {
 	private Map<String, ClassInfo> db;
@@ -14,27 +15,27 @@ public class ClassInfoRepository {
 		this.db = new HashMap<>();
 	}
 	
-	public ClassInfo saveOrGet(String project, Modification m) {
+	public ClassInfo saveOrGet(SCMRepository repo, Modification m) {
 		
 		String file = m.getNewPath();
-		String fullName = fullName(project, file);
+		String fullName = fullName(repo, file);
 		
 		if(!db.containsKey(fullName)) {
-			db.put(fullName, new ClassInfo(project, file));
+			db.put(fullName, new ClassInfo(repo.getLastDir(), fullName));
 		}
 		
 		return db.get(fullName);
 	}
 
-	public void rename(String project, Modification m) {
+	public void rename(SCMRepository repo, Modification m) {
 		String oldPath = m.getOldPath();
 		String newPath = m.getNewPath();
 		
-		ClassInfo classInfo = db.remove(fullName(project, oldPath));
+		ClassInfo classInfo = db.remove(fullName(repo, oldPath));
 		
 		if(classInfo!=null) {
-			classInfo.rename(newPath);
-			db.put(fullName(project, newPath), classInfo);
+			classInfo.rename(fullName(repo, newPath));
+			db.put(fullName(repo, newPath), classInfo);
 		}
 	}
 
@@ -42,9 +43,9 @@ public class ClassInfoRepository {
 		return db.values();
 	}
 	
-	private String fullName(String project, String file) {
-		return project + "/" + file;
+	private String fullName(SCMRepository repo, String file) {
+		String path = repo.getPath() + (repo.getPath().endsWith("/")?"":"/");
+		return path + file;
 	}
-
 
 }
