@@ -5,7 +5,7 @@ generates a CSV file with the following header:
 
 ```
 "project": the name of the project directory,
-"file": the full file path without the root (the project path),
+"file": the full file path,
 "revisions": quantity of commits,
 "refactorings": quantity of refactorings that occured (if said in commit msg),
 "bugfixes": quantity of bugs that file has had (if said in commit msg),
