@@ -102,9 +102,8 @@ public class ClassInfo {
 
 	private void countBugFixes(String msg) {
 		if(msg.contains("fix") && !msg.contains("postfix") && !msg.contains("prefix")) bugfixes++;
+		if(msg.contains("bug")) bugfixes++;
 	}
-
-
 
 	private void countRevision(Modification modification) {
 		if(modification.getType() != ModificationType.DELETE) revisions++;
