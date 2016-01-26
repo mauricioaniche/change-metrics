@@ -1,1 +1,1 @@
-/Users/mauricioaniche/workspace/change-metrics-collector/src/test/repo1/
+/Users/mauricioaniche/workspace/change-metrics/src/test/repo1/
