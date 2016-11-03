@@ -1,12 +1,11 @@
-package br.com.aniche.changemetrics;
+package nl.tudelft.serg.changemetrics;
 
-import br.com.aniche.changemetrics.repo.ClassInfoRepository;
-import br.com.metricminer2.domain.Commit;
-import br.com.metricminer2.domain.Modification;
-import br.com.metricminer2.domain.ModificationType;
-import br.com.metricminer2.persistence.PersistenceMechanism;
-import br.com.metricminer2.scm.CommitVisitor;
-import br.com.metricminer2.scm.SCMRepository;
+import org.repodriller.domain.Commit;
+import org.repodriller.domain.Modification;
+import org.repodriller.domain.ModificationType;
+import org.repodriller.persistence.PersistenceMechanism;
+import org.repodriller.scm.CommitVisitor;
+import org.repodriller.scm.SCMRepository;
 
 public class ChangeMetricProcessor implements CommitVisitor {
 

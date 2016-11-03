@@ -1,13 +1,13 @@
-package br.com.aniche.changemetrics;
+package nl.tudelft.serg.changemetrics;
 
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import br.com.metricminer2.domain.Commit;
-import br.com.metricminer2.domain.Modification;
-import br.com.metricminer2.domain.ModificationType;
+import org.repodriller.domain.Commit;
+import org.repodriller.domain.Modification;
+import org.repodriller.domain.ModificationType;
 
 public class ClassInfo {
 

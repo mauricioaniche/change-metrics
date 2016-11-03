@@ -7,11 +7,12 @@ import java.util.GregorianCalendar;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.repodriller.domain.Commit;
+import org.repodriller.domain.Developer;
+import org.repodriller.domain.Modification;
+import org.repodriller.domain.ModificationType;
 
-import br.com.metricminer2.domain.Commit;
-import br.com.metricminer2.domain.Developer;
-import br.com.metricminer2.domain.Modification;
-import br.com.metricminer2.domain.ModificationType;
+import nl.tudelft.serg.changemetrics.ClassInfo;
 
 public class ClassInfoTest {
 
@@ -28,11 +29,11 @@ public class ClassInfoTest {
 	
 	@Test
 	public void countRevisions() {
-		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), "some normal commit", null);
+		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "some normal commit", null);
 		commit1.addModifications(Arrays.asList(modification));
-		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), "some normal commit", null);
+		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "some normal commit", null);
 		commit2.addModifications(Arrays.asList(modification));
-		Commit commit3 = new Commit("345", dev, dev, Calendar.getInstance(), "some normal commit", null);
+		Commit commit3 = new Commit("345", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "some normal commit", null);
 		commit3.addModification("/file", "/file", ModificationType.DELETE, "- remove\n- remove\n- remove", "any source");
 		
 		Assert.assertEquals(0, classInfo.getRevisions());
@@ -46,13 +47,13 @@ public class ClassInfoTest {
 
 	@Test
 	public void countRefactoringsByHeuristicInCommitMsg() {
-		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), "some normal commit", null);
+		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "some normal commit", null);
 		commit1.addModifications(Arrays.asList(modification));
-		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), "refactor", null);
+		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "refactor", null);
 		commit2.addModifications(Arrays.asList(modification));
-		Commit commit3 = new Commit("345", dev, dev, Calendar.getInstance(), "refactoring", null);
+		Commit commit3 = new Commit("345", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "refactoring", null);
 		commit3.addModifications(Arrays.asList(modification));
-		Commit commit4 = new Commit("345", dev, dev, Calendar.getInstance(), "did some REfactoring in these classes", null);
+		Commit commit4 = new Commit("345", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "did some REfactoring in these classes", null);
 		commit4.addModifications(Arrays.asList(modification));
 		
 		Assert.assertEquals(0, classInfo.getRefactorings());
@@ -68,13 +69,13 @@ public class ClassInfoTest {
 
 	@Test
 	public void countBugFixesByHeuristicInCommitMsg() {
-		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), "some normal commit", null);
+		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "some normal commit", null);
 		commit1.addModifications(Arrays.asList(modification));
-		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), "did some fix in here", null);
+		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "did some fix in here", null);
 		commit2.addModifications(Arrays.asList(modification));
-		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), "did some prefix in here", null);
+		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "did some prefix in here", null);
 		commit3.addModifications(Arrays.asList(modification));
-		Commit commit4 = new Commit("910", dev, dev, Calendar.getInstance(), "did some postfix in here", null);
+		Commit commit4 = new Commit("910", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "did some postfix in here", null);
 		commit4.addModifications(Arrays.asList(modification));
 		
 		Assert.assertEquals(0, classInfo.getBugfixes());
@@ -92,11 +93,11 @@ public class ClassInfoTest {
 	public void countDifferentAuthors() {
 		Developer dev2 = new Developer("Guilherme", "guilhermesilveira@gmail.com");
 		
-		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), "some normal commit", null);
+		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "some normal commit", null);
 		commit1.addModifications(Arrays.asList(modification));
-		Commit commit2 = new Commit("345", dev2, dev2, Calendar.getInstance(), "other commit, different dev", null);
+		Commit commit2 = new Commit("345", dev2, dev2, Calendar.getInstance(), Calendar.getInstance(), "other commit, different dev", null);
 		commit2.addModifications(Arrays.asList(modification));
-		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), "other commit, same dev", null);
+		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "other commit, same dev", null);
 		commit3.addModifications(Arrays.asList(modification));
 		
 		Assert.assertEquals(0, classInfo.getUniqueAuthorsQuantity());
@@ -110,9 +111,9 @@ public class ClassInfoTest {
 
 	@Test
 	public void countLocAddedAndRemoved() {
-		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), "some normal commit", null);
-		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), "other commit", null);
-		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), "other other commit, file removed, ignore", null);
+		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "some normal commit", null);
+		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "other commit", null);
+		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "other other commit, file removed, ignore", null);
 		
 		commit1.addModification("/file", "/file", ModificationType.ADD, "+ add\n+add\n- remove", "any source");
 		commit2.addModification("/file", "/file", ModificationType.MODIFY, "+ add\n+add\n- remove", "any source");
@@ -134,9 +135,9 @@ public class ClassInfoTest {
 
 	@Test
 	public void countMaxLocAddedAndRemoved() {
-		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), "some normal commit", null);
-		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), "other commit", null);
-		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), "other other commit, file removed, ignore", null);
+		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "some normal commit", null);
+		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "other commit", null);
+		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "other other commit, file removed, ignore", null);
 		
 		commit1.addModification("/file", "/file", ModificationType.ADD, "+ add\n+add\n- remove", "any source");
 		commit2.addModification("/file", "/file", ModificationType.MODIFY, "+ add\n+add\n+ add\n- remove\n-remove", "any source");
@@ -157,9 +158,9 @@ public class ClassInfoTest {
 
 	@Test
 	public void countAvgLocAddedAndRemoved() {
-		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), "some normal commit", null);
-		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), "other commit", null);
-		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), "other other commit, file removed, ignore", null);
+		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "some normal commit", null);
+		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "other commit", null);
+		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "other other commit, file removed, ignore", null);
 		
 		commit1.addModification("/file", "/file", ModificationType.ADD, "+ add\n+add\n- remove", "any source");
 		commit2.addModification("/file", "/file", ModificationType.MODIFY, "+ add\n+add\n+ add\n- remove\n-remove", "any source");
@@ -180,9 +181,9 @@ public class ClassInfoTest {
 	
 	@Test
 	public void countCodeChurn() {
-		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), "some normal commit", null);
-		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), "other commit", null);
-		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), "other other commit, file removed, ignore", null);
+		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "some normal commit", null);
+		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "other commit", null);
+		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "other other commit, file removed, ignore", null);
 		
 		commit1.addModification("/file", "/file", ModificationType.ADD, "+ add\n+add\n- remove", "any source");
 		commit2.addModification("/file", "/file", ModificationType.MODIFY, "+ add\n+add\n- remove", "any source");
@@ -200,9 +201,9 @@ public class ClassInfoTest {
 
 	@Test
 	public void countChangeset() {
-		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), "some normal commit", null);
-		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), "other commit", null);
-		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), "other other commit, file removed, ignore", null);
+		Commit commit1 = new Commit("123", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "some normal commit", null);
+		Commit commit2 = new Commit("345", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "other commit", null);
+		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "other other commit, file removed, ignore", null);
 		
 		commit1.addModification("/file", "/file", ModificationType.ADD, "+ add\n+add\n- remove", "any source");
 		commit1.addModification("/file2", "/file2", ModificationType.ADD, "+ add\n+add\n- remove", "any source");
@@ -236,11 +237,11 @@ public class ClassInfoTest {
 		Calendar firstCommit = new GregorianCalendar(2005, Calendar.JANUARY, 1);
 		Calendar lastCommit = new GregorianCalendar(2006, Calendar.JANUARY, 1);
 		
-		Commit commit1 = new Commit("123", dev, dev, firstCommit, "some normal commit", null);
+		Commit commit1 = new Commit("123", dev, dev, firstCommit, firstCommit, "some normal commit", null);
 		commit1.addModifications(Arrays.asList(modification));
-		Commit commit2 = new Commit("345", dev, dev, lastCommit, "other commit, different dev", null);
+		Commit commit2 = new Commit("345", dev, dev, lastCommit, lastCommit, "other commit, different dev", null);
 		commit2.addModifications(Arrays.asList(modification));
-		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), "other commit, same dev", null);
+		Commit commit3 = new Commit("678", dev, dev, Calendar.getInstance(), Calendar.getInstance(), "other commit, same dev", null);
 		commit3.addModification("/file", "/file", ModificationType.DELETE, "- remove\n- remove\n- remove", "any source");
 		
 		Assert.assertNull(classInfo.getFirstCommit());

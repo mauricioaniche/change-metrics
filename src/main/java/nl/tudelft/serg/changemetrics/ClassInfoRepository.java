@@ -1,12 +1,11 @@
-package br.com.aniche.changemetrics.repo;
+package nl.tudelft.serg.changemetrics;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.aniche.changemetrics.ClassInfo;
-import br.com.metricminer2.domain.Modification;
-import br.com.metricminer2.scm.SCMRepository;
+import org.repodriller.domain.Modification;
+import org.repodriller.scm.SCMRepository;
 
 public class ClassInfoRepository {
 	private Map<String, ClassInfo> db;

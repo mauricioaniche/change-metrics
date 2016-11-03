@@ -17,9 +17,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>br.usp</groupId>
-			<artifactId>metricminer</artifactId>
-			<version>2.2.0</version>
+			<groupId>org.repodriller</groupId>
+			<artifactId>repodriller</artifactId>
+			<version>1.1.0</version>
 		</dependency>
 		
 		<dependency>

@@ -1,17 +1,16 @@
-package br.com.aniche.changemetrics;
+package nl.tudelft.serg.changemetrics;
 
 import java.text.SimpleDateFormat;
 
-import br.com.aniche.changemetrics.repo.ClassInfoRepository;
-import br.com.metricminer2.MetricMiner2;
-import br.com.metricminer2.RepositoryMining;
-import br.com.metricminer2.Study;
-import br.com.metricminer2.persistence.csv.CSVFile;
-import br.com.metricminer2.scm.GitRepository;
-import br.com.metricminer2.scm.SCMRepository;
-import br.com.metricminer2.scm.commitrange.CommitRange;
-import br.com.metricminer2.scm.commitrange.Commits;
-import br.com.metricminer2.scm.commitrange.Range;
+import org.repodriller.RepoDriller;
+import org.repodriller.RepositoryMining;
+import org.repodriller.Study;
+import org.repodriller.filter.range.CommitRange;
+import org.repodriller.filter.range.Commits;
+import org.repodriller.filter.range.Range;
+import org.repodriller.persistence.csv.CSVFile;
+import org.repodriller.scm.GitRepository;
+import org.repodriller.scm.SCMRepository;
 
 public class ChangeMetricsStudy implements Study {
 
@@ -44,7 +43,7 @@ public class ChangeMetricsStudy implements Study {
 			new ChangeMetricsStudy(args[0], args[1], args[2]) :
 			new ChangeMetricsStudy(args[0], args[1], args[2], args[3], args[4]); 
 			
-		new MetricMiner2().start(study);
+		new RepoDriller().start(study);
 	}
 	
 	@Override
@@ -64,7 +63,6 @@ public class ChangeMetricsStudy implements Study {
 		new RepositoryMining()
 			.in(repositories)
 			.through(range)
-			.startingFromTheBeginning()
 			.process(new ChangeMetricProcessor(repo))
 			.mine();
 		
